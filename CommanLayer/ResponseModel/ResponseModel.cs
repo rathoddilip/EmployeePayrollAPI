@@ -12,7 +12,7 @@ namespace CommanLayer.ResponseModel
         [Required]
         public string Name { get; set; }
         [Required]
-        public char Gender { get; set; }
+        public string Gender { get; set; }
         [Required]
         public long Salary { get; set; }
         [Required]

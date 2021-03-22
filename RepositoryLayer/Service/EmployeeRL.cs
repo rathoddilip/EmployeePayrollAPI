@@ -55,7 +55,7 @@ namespace RepositoryLayer.Service
                         EmployeeModel emp = new EmployeeModel();
                         emp.id = dr.GetInt32(0);
                         emp.Name = dr.GetString(1);
-                        emp.Gender = Convert.ToChar(dr.GetString(2));
+                        emp.Gender = dr.GetString(2);
                         emp.Salary = dr.GetInt64(3);
                         emp.StartDate = dr.GetDateTime(4);
    
@@ -81,15 +81,15 @@ namespace RepositoryLayer.Service
                 {
                     SqlCommand sqlCommand = new SqlCommand(storedProcedure, connection, transaction);
                     sqlCommand.CommandType = CommandType.StoredProcedure;
-                    sqlCommand.Parameters.AddWithValue("@StartDate", employee.StartDate);
                     sqlCommand.Parameters.AddWithValue("@Name", employee.Name);
                     sqlCommand.Parameters.AddWithValue("@Gender", employee.Gender);
                     sqlCommand.Parameters.AddWithValue("@Salary", employee.Salary);
+                    sqlCommand.Parameters.AddWithValue("@StartDate", employee.StartDate);
 
-                    SqlParameter outPutVal = new SqlParameter("@ScopeIdentifier", SqlDbType.Int);
+                    /*SqlParameter outPutVal = new SqlParameter("@ScopeIdentifier", SqlDbType.Int);
                     outPutVal.Direction = ParameterDirection.Output;
-                    sqlCommand.Parameters.Add(outPutVal);
-
+                    sqlCommand.Parameters.Add(outPutVal);*/
+                    sqlCommand.ExecuteNonQuery();
                     transaction.Commit();
                     connection.Close();
                     return "Data Added Successfully";

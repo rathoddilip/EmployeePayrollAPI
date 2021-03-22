@@ -36,3 +36,4 @@ ON Employee.ID=Department.DeptID
 
 insert into Department(DeptName)values
 ('Mech');
+select * from Employee
