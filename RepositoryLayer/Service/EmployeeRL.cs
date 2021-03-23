@@ -11,6 +11,7 @@ namespace RepositoryLayer.Service
     public class EmployeeRL: IEmployeeRL
     {
         static string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=EmployeePayrollAPIDB;User Id=root;Password=root";
+        //public EmployeeModel employeeModel = new EmployeeModel();
         private List<EmployeeModel> groupEmployees(List<EmployeeModel> inputEmployees)
         {
             List<EmployeeModel> outputEmployees = new List<EmployeeModel>();
@@ -58,7 +59,12 @@ namespace RepositoryLayer.Service
                         emp.Gender = dr.GetString(2);
                         emp.Salary = dr.GetInt64(3);
                         emp.StartDate = dr.GetDateTime(4);
-   
+                        emp.ProfileImage = dr.GetString(5);
+                        emp.Notes = dr.GetString(6);
+                        emp.DeptID = dr.GetInt32(7);
+                        emp.Department1 = dr.GetString(8);
+                        emp.Department2 = dr.GetString(9);
+                        emp.Department3 = dr.GetString(10);
                         employees.Add(emp);
                     }//end while
 
@@ -85,14 +91,17 @@ namespace RepositoryLayer.Service
                     sqlCommand.Parameters.AddWithValue("@Gender", employee.Gender);
                     sqlCommand.Parameters.AddWithValue("@Salary", employee.Salary);
                     sqlCommand.Parameters.AddWithValue("@StartDate", employee.StartDate);
-
-                    /*SqlParameter outPutVal = new SqlParameter("@ScopeIdentifier", SqlDbType.Int);
-                    outPutVal.Direction = ParameterDirection.Output;
-                    sqlCommand.Parameters.Add(outPutVal);*/
+                    sqlCommand.Parameters.AddWithValue("@ProfileImage", employee.ProfileImage);
+                    sqlCommand.Parameters.AddWithValue("@Notes", employee.Notes); 
+                    sqlCommand.Parameters.AddWithValue("@Department1", employee.Department1);
+                    sqlCommand.Parameters.AddWithValue("@Department2", employee.Department2);
+                    sqlCommand.Parameters.AddWithValue("@Department3", employee.Department3);
                     sqlCommand.ExecuteNonQuery();
                     transaction.Commit();
                     connection.Close();
+
                     return "Data Added Successfully";
+                    
                 }
 
                 catch (Exception ex)
